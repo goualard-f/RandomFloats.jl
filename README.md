@@ -1,4 +1,4 @@
-!!! warning 
+!!! warning "Early stage"
     The package is currently in a very early stage.
 	
 
