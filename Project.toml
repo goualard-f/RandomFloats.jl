@@ -1,7 +1,10 @@
 name = "RandomFloats"
 uuid = "40834966-4401-48be-99fb-f6485466bc30"
-authors = ["Frédéric Goualard <Frederic.Goualard@univ-nantes.fr> and contributors"]
+authors = ["Frédéric Goualard <Frederic.Goualard@univ-nantes.fr>"]
 version = "0.1.0"
+
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 
 [compat]
 julia = "1"
