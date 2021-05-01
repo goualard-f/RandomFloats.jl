@@ -1,4 +1,4 @@
-# RandomFloats --
+# LCG64 --
 #
 #	Copyright 2021 University of Nantes, France.
 #
@@ -18,18 +18,26 @@
 #	GNU Lesser General Public License along with the RandomFloats Library.
 # If not,	see https://www.gnu.org/licenses/.
 
-using RandomFloats
-import RandomFloats.LCG.LCG32 as LCG32
-import RandomFloats.LCG.LCG64 as LCG64
-using Test
-using TestSetExtensions
+module LCG64
 
-# Call "julia runtests.jl [tests1] [tests2] ..."
-# to launch only the tests in `test1.jl`, `test2.jl`, ...
-# Calling "julia runtests.jl" launches all tests in the directory.
-@testset ExtendedTestSet "All the tests" begin
-    @testset "All tests" begin
-        @includetests ARGS
-    end
-end;
+import ...SimpleUInt64Generator
+import ...GLOBAL_SEED
 
+function lehmer64_fun(rng::SimpleUInt64Generator)
+    rng.state *= 0xda942042e4dd58b5
+    return UInt64(rng.state >> 64)
+end
+
+"""
+    lehmer64(seed = GLOBAL_SEED)
+
+LCG as presented by D. Lemire in [_The fastest conventional random number generator that can pass Big Crush?_](https://lemire.me/blog/2019/03/19/the-fastest-conventional-random-number-generator-that-can-pass-big-crush/).
+
+## References
+Tables of linear congruential generators of different sizes and good 
+lattice structure. P. L'Ecuyer, Mathematics of Computation of the American
+Mathematical Society 68.225 (1999): 249-260.
+"""
+lehmer64(seed = GLOBAL_SEED) = return SimpleUInt64Generator("lehmer64",UInt128(seed),lehmer64_fun)
+
+end # module

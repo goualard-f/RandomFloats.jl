@@ -1,4 +1,4 @@
-# RandomFloats --
+# FRNGMisc --
 #
 #	Copyright 2021 University of Nantes, France.
 #
@@ -18,18 +18,22 @@
 #	GNU Lesser General Public License along with the RandomFloats Library.
 # If not,	see https://www.gnu.org/licenses/.
 
-using RandomFloats
-import RandomFloats.LCG.LCG32 as LCG32
-import RandomFloats.LCG.LCG64 as LCG64
-using Test
-using TestSetExtensions
+export rand_go
 
-# Call "julia runtests.jl [tests1] [tests2] ..."
-# to launch only the tests in `test1.jl`, `test2.jl`, ...
-# Calling "julia runtests.jl" launches all tests in the directory.
-@testset ExtendedTestSet "All the tests" begin
-    @testset "All tests" begin
-        @includetests ARGS
-    end
-end;
+"""
+    rand_go(rng = mersenne_twister())
 
+Compute a `Float64` float drawn uniformly at random in ``[0,1)`` using the method
+adopted in the _Go_ language. 
+
+The method used consists in generating a 63 bits random integer and dividing the 
+result by ``2^{63}``. The result may round to ``1.0``; in that case it is rejected and
+the function is called again.
+
+## References
+[Go source](https://golang.org/src/math/rand/rand.go?s=5359:5391#L168), retrieved 2021-05-01.
+"""
+function rand_go(rng::RandomUInt64Generator = mersenne_twister())
+    r = irandint(63,rng) / UInt64(2)^63
+    return r != 1.0 ? r : rand_go()
+end

@@ -1,4 +1,4 @@
-# RandomFloats --
+# FRNGDivision --
 #
 #	Copyright 2021 University of Nantes, France.
 #
@@ -18,18 +18,17 @@
 #	GNU Lesser General Public License along with the RandomFloats Library.
 # If not,	see https://www.gnu.org/licenses/.
 
-using RandomFloats
-import RandomFloats.LCG.LCG32 as LCG32
-import RandomFloats.LCG.LCG64 as LCG64
-using Test
-using TestSetExtensions
+#======================================================= 
+Generation of a float in <0,1> by dividing two integers. 
+There are mainly three different ways:
+- Generate a random integer and divide it by a constant;
+- Generate a random integer and multiply it by the 
+  inverse of a constant;
+- Generate two random integers and divide the first by 
+  the second.
+========================================================#
 
-# Call "julia runtests.jl [tests1] [tests2] ..."
-# to launch only the tests in `test1.jl`, `test2.jl`, ...
-# Calling "julia runtests.jl" launches all tests in the directory.
-@testset ExtendedTestSet "All the tests" begin
-    @testset "All tests" begin
-        @includetests ARGS
-    end
-end;
 
+include("FRNG32Division.jl")
+
+include("FRNG64Division.jl")
