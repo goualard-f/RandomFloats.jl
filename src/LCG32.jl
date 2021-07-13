@@ -25,6 +25,7 @@ import ...nextUInt32
 import ...GLOBAL_SEED
 
 export minstd, irandu
+export urand
 
 """
     LCG32Generator
@@ -99,4 +100,20 @@ function irandu(seed = GLOBAL_SEED)
     return LCG32Generator("irandu",seed,65539,0,2^31)
 end
 
+"""
+    urand(seed = GLOBAL_SEED)
+
+Integer version of the RNG proposed by M.A. Malcom and C.B. Moler in 1973.
+
+The generator must be seeded with an integer in ``[0, 2^31-1]``.
+
+This is the [basic generator](https://github.com/scilab/scilab/blob/master/scilab/modules/randlib/src/c/urand.c) for SCILAB.
+
+## Reference
+_URAND: A Universal Random Number Generator_. M.A. Malcom and C.B. Moler. Report STAN-CS-73-334, January 1973. Computer Science Department, Stanford University.
+"""
+function urand(seed = GLOBAL_SEED)
+    (seed < 0 || seed > 2147483647) && throw(ArgumentError("the seed must be an integer in [0, 2^31-1]"))
+    return LCG32Generator("urand",seed,843314861,453816693,2^31)
+end
 end # module

@@ -55,6 +55,6 @@ function nextUInt64(rng::JuliaUInt64Generator)
 end
 
 mersenne_twister(seed = GLOBAL_SEED) = JuliaUInt64Generator(seed,
-                                                           Random.MersenneTwister(seed),
-                                                           "MersenneTwister")
+                                                            Random.MersenneTwister(seed),
+                                                            "MersenneTwister")
 

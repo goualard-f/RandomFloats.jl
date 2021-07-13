@@ -19,7 +19,8 @@
 # If not,	see https://www.gnu.org/licenses/.
 
 export rand_go
-
+export rand_r0to1b
+    
 """
     rand_go(rng = mersenne_twister())
 
@@ -36,4 +37,27 @@ the function is called again.
 function rand_go(rng::RandomUInt64Generator = mersenne_twister())
     r = irandint(63,rng) / UInt64(2)^63
     return r != 1.0 ? r : rand_go()
+end
+
+
+"""
+    ffs(Integer
+"""
+
+
+"""
+    rand_r0to1b(::Type{T} = Float64) where {T <: AbstractFloat}
+
+Generate a float in ``[0,1)`` by creating separately an exponent in [0,52] 
+and a fractional part from 53 random bits. The position ``i`` of the rightmost ``1`` bit
+determines the exponent while the  
+"""
+function r0to1b(::Type{T} = Float64) where {T <: AbstractFloat}
+    p = precision(T)
+    fsize = p - 1
+    r = rand(DiscreteUniform(0,2^p-1))
+    e = trailing_zeros(r)+1
+    (e > fsize || e == 0) && return T(0.0)
+    m = (r >> e) << (e - 1)
+    return T((2.0^fsize+m)*(2.0^(-fsize-e)))
 end
