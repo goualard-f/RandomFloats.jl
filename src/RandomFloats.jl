@@ -112,7 +112,11 @@ Return the next `Float64` float generated with `rng`.
 """
 function nextFloat64 end
 
+# Miscellaneous Integer RNGs
+include("RNGMisc.jl")
 
+# Linear Congruential Generators
+include("LCG.jl")
 
 """
     irandint(n::Int, rng::RandomUInt64Generator = mersenne_twister())
@@ -127,11 +131,6 @@ function irandint(n::Int, rng::RandomUInt64Generator = mersenne_twister())
     return nextUInt64(rng) >> (64-n)
 end
 
-# Linear Congruential Generators
-include("LCG.jl")
-
-# Miscellaneous Integer RNGs
-include("RNGMisc.jl")
 
 # FRNGs obtained by division of integers
 include("FRNGDivision.jl")

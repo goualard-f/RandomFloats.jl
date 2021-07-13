@@ -23,6 +23,8 @@ module LCG64
 import ...SimpleUInt64Generator
 import ...GLOBAL_SEED
 
+export lehmer64
+
 function lehmer64_fun(rng::SimpleUInt64Generator)
     rng.state *= 0xda942042e4dd58b5
     return UInt64(rng.state >> 64)
